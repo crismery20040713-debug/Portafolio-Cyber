@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portafolio profesional cyberpunk de Crismery Florentino Encarnación - Desarrollador Frontend">
+    <title>CRISMERY FLORENTINO ENC. // CYBERPUNK PORTFOLIO</title>
+    
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Font Awesome para iconos neon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --neon-cyan: #00f7ff;
+            --neon-pink: #ff00aa;
+            --neon-green: #39ff14;
+            --neon-purple: #9d00ff;
+            --bg-dark: #0a001f;
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo cyberpunk con scanlines y grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -2;
+            animation: grid-move 20s linear infinite;
+        }
+
+        /* Scanlines animados */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 4px,
+                rgba(57, 255, 20, 0.08) 4px,
+                rgba(57, 255, 20, 0.08) 8px
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: scanlines 4s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        /* Efecto de brillo global */
+        .neon-text {
+            text-shadow: 
+                0 0 8px var(--neon-cyan),
+                0 0 16px var(--neon-cyan),
+                0 0 32px var(--neon-pink);
+            animation: neon-flicker 1.5s infinite alternate;
+        }
+
+        @keyframes neon-flicker {
+            0%, 19% { text-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-cyan); }
+            20%, 24% { text-shadow: none; }
+            25%, 54% { text-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-cyan), 0 0 32px var(--neon-pink); }
+            55%, 59% { text-shadow: none; }
+            60%, 100% { text-shadow: 0 0 8px var(--neon-cyan), 0 0 16px var(--neon-cyan); }
+        }
+
+        .navbar {
+            background: rgba(10, 0, 31, 0.95) !important;
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 25px var(--neon-cyan);
+        }
+
+        .nav-link {
+            color: #fff !important;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-pink) !important;
+            text-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--neon-pink);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 247, 255, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .section-title {
+            font-size: 3rem;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        .skill-bar {
+            height: 12px;
+            background: #1a0033;
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 12px var(--neon-green);
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            box-shadow: 0 0 15px var(--neon-cyan);
+            transition: width 1.5s ease;
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 3px solid transparent;
+            background: #110033;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 0 40px var(--neon-pink);
+            border-color: var(--neon-pink);
+        }
+
+        .btn-neon {
+            border: 3px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+            transition: all 0.3s;
+        }
+
+        .btn-neon:hover {
+            background: var(--neon-cyan);
+            color: #0a001f;
+            box-shadow: 0 0 30px var(--neon-cyan);
+            transform: scale(1.1);
+        }
+
+        .footer {
+            background: #050011;
+            border-top: 2px solid var(--neon-purple);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2.2rem;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
+        <div class="container">
+            <a class="navbar-brand neon-text fs-3 fw-bold" href="#" style="letter-spacing: 6px;">
+                CRISMERY<span class="text-pink" style="color: var(--neon-pink);">.</span>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="filter: brightness(0) invert(1);"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto text-center">
+                    <li class="nav-item"><a class="nav-link px-4" href="#about">SOBRE MÍ</a></li>
+                    <li class="nav-item"><a class="nav-link px-4" href="#skills">HABILIDADES</a></li>
+                    <li class="nav-item"><a class="nav-link px-4" href="#projects">PROYECTOS</a></li>
+                    <li class="nav-item"><a class="nav-link px-4" href="#contact">CONTACTO</a></li>
+                    <li class="nav-item ms-3">
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-light btn-sm px-4 py-2">
+                            <i class="fab fa-github"></i> GITHUB
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home" class="hero">
+        <div class="container text-center position-relative">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="display-1 fw-bold neon-text glitch mb-3" style="font-size: 5.5rem; letter-spacing: -4px;">
+                        CRISMERY FLORENTINO ENCARNACIÓN
+                    </h1>
+                    <h2 class="fs-1 mb-4" style="color: var(--neon-pink); text-shadow: 0 0 20px var(--neon-pink);">
+                        DESARROLLADOR FRONTEND • CYBERPUNK ARCHITECT
+                    </h2>
+                    <p class="lead mb-5 fs-4" style="max-width: 700px; margin: 0 auto; color: #ddd;">
+                        Santo Domingo, República Dominicana • Creando interfaces del futuro con código y neón
+                    </p>
+                    
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <a href="#projects" class="btn btn-neon btn-lg px-5 py-3 rounded-0">
+                            <i class="fas fa-rocket"></i> VER PROYECTOS
+                        </a>
+                        <a href="#contact" class="btn btn-outline-light btn-lg px-5 py-3 rounded-0">
+                            <i class="fas fa-terminal"></i> CONÉCTATE AL GRID
+                        </a>
+                    </div>
+                    
+                    <div class="mt-5 d-flex justify-content-center gap-5 text-muted">
+                        <div><i class="fab fa-bootstrap fa-2x"></i></div>
+                        <div><i class="fab fa-js fa-2x"></i></div>
+                        <div><i class="fas fa-code fa-2x"></i></div>
+                        <div><i class="fab fa-react fa-2x"></i></div>
+                    </div>
+                    
+                    <!-- Indicador de scroll -->
+                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-5">
+                        <div class="d-flex flex-column align-items-center text-neon-cyan">
+                            <span class="mb-2" style="font-size: 0.8rem; letter-spacing: 4px;">SCROLL PARA ENTRAR AL MATRIX</span>
+                            <i class="fas fa-chevron-down fa-2x animate__animated animate__bounce animate__infinite"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <div class="border border-3 border-cyan p-4 text-center" style="border-color: var(--neon-cyan); box-shadow: 0 0 30px var(--neon-cyan);">
+                        <div class="mb-4">
+                            <i class="fas fa-user-secret fa-8x" style="color: var(--neon-green); filter: drop-shadow(0 0 30px var(--neon-green));"></i>
+                        </div>
+                        <h3 class="neon-text mb-3">CRISMERY FLORENTINO ENCARNACIÓN</h3>
+                        <p class="text-muted">Santo Domingo Oeste • República Dominicana</p>
+                        <div class="d-flex justify-content-center gap-3 mt-4">
+                            <a href="#" class="text-neon-cyan"><i class="fab fa-linkedin fa-2x"></i></a>
+                            <a href="#" class="text-neon-pink"><i class="fab fa-github fa-2x"></i></a>
+                            <a href="#" class="text-neon-green"><i class="fab fa-x-twitter fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <h2 class="section-title neon-text mb-4">SOBRE MÍ</h2>
+                    <p class="lead fs-5" style="line-height: 1.8;">
+                        Soy Crismery, un desarrolladora frontend obsesionada con la estética cyberpunk. 
+                        Transformo ideas en interfaces digitales que parecen sacadas de una noche lluviosa en Neo-Tokyo.
+                    </p>
+                    <p class="fs-5 mt-4">
+                        Con más de 5 años creando experiencias inmersivas, combino código limpio con efectos visuales de alto impacto. 
+                        Mi misión: hacer que cada pixel brille como un neón en la oscuridad.
+                    </p>
+                    <div class="row mt-5">
+                        <div class="col-md-4 text-center mb-4">
+                            <h5 class="text-neon-cyan">+42</h5>
+                            <p class="text-muted">PROYECTOS DEPLOYADOS</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <h5 class="text-neon-pink">∞</h5>
+                            <p class="text-muted">LÍNEAS DE CÓDIGO NEÓN</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <h5 class="text-neon-green">100%</h5>
+                            <p class="text-muted">MODO NOCTURNO ACTIVADO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-5 bg-black">
+        <div class="container py-5">
+            <h2 class="section-title neon-text text-center mb-5">HABILIDADES // CORE</h2>
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>HTML5 + CSS3</span><span class="text-neon-cyan">98%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 98%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>JavaScript / TypeScript</span><span class="text-neon-cyan">95%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>Bootstrap + Tailwind</span><span class="text-neon-cyan">100%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 100%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>React / Next.js</span><span class="text-neon-cyan">90%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>Three.js + GSAP</span><span class="text-neon-cyan">85%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>UI/UX Cyber Design</span><span class="text-neon-cyan">97%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 97%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>Git + Vercel</span><span class="text-neon-cyan">92%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 92%;"></div></div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="d-flex justify-content-between mb-2"><span>Figma + Blender</span><span class="text-neon-cyan">88%</span></div>
+                    <div class="skill-bar"><div class="skill-progress" style="width: 88%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-5">
+        <div class="container py-5">
+            <h2 class="section-title neon-text text-center mb-5">PROYECTOS // NEON ARCHIVES</h2>
+            
+            <div class="row g-4">
+                <!-- Proyecto 1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card rounded-0 p-4 h-100">
+                        <div class="text-neon-pink mb-3"><i class="fas fa-city fa-3x"></i></div>
+                        <h4 class="mb-2">NEON CITY DASHBOARD</h4>
+                        <p class="text-muted">Panel administrativo futurista con animaciones 3D y datos en tiempo real. 100% responsive y cyberpunk.</p>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <span class="badge bg-transparent border border-cyan text-cyan">React</span>
+                            <span class="badge bg-transparent border border-pink text-pink">Three.js</span>
+                            <span class="badge bg-transparent border border-green text-green">Tailwind</span>
+                        </div>
+                        <a href="#" class="btn btn-neon btn-sm mt-4 w-100">VER EN VIVO <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card rounded-0 p-4 h-100">
+                        <div class="text-neon-green mb-3"><i class="fas fa-matrix fa-3x"></i></div>
+                        <h4 class="mb-2">MATRIX CHAT v2.0</h4>
+                        <p class="text-muted">Aplicación de mensajería inspirada en The Matrix con encriptación visual y efectos glitch en tiempo real.</p>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <span class="badge bg-transparent border border-cyan text-cyan">Next.js</span>
+                            <span class="badge bg-transparent border border-pink text-pink">Socket.io</span>
+                            <span class="badge bg-transparent border border-green text-green">GSAP</span>
+                        </div>
+                        <a href="#" class="btn btn-neon btn-sm mt-4 w-100">VER EN VIVO <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="project-card rounded-0 p-4 h-100">
+                        <div class="text-neon-cyan mb-3"><i class="fas fa-portrait fa-3x"></i></div>
+                        <h4 class="mb-2">ESTE PORTAFOLIO</h4>
+                        <p class="text-muted">Single-file HTML5 cyberpunk portfolio con efectos de luz, scanlines y total responsividad. Desplegado en GitHub Pages + Vercel.</p>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <span class="badge bg-transparent border border-cyan text-cyan">HTML5</span>
+                            <span class="badge bg-transparent border border-pink text-pink">CSS3</span>
+                            <span class="badge bg-transparent border border-green text-green">Bootstrap</span>
+                            <span class="badge bg-transparent border border-purple text-purple">JS</span>
+                        </div>
+                        <a href="#" class="btn btn-neon btn-sm mt-4 w-100">VER CÓDIGO <i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-5 bg-black">
+        <div class="container py-5">
+            <h2 class="section-title neon-text text-center mb-5">CONTACTO // CONÉCTATE AL NEXO</h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm" class="p-5 border border-3" style="border-color: var(--neon-purple); box-shadow: 0 0 40px var(--neon-purple);">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label text-neon-cyan">NOMBRE EN EL GRID</label>
+                                <input type="text" class="form-control bg-transparent border-cyan text-white" id="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-neon-cyan">EMAIL NEÓN</label>
+                                <input type="email" class="form-control bg-transparent border-cyan text-white" id="email" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-neon-cyan">MENSAJE DESDE EL SUBNET</label>
+                                <textarea class="form-control bg-transparent border-cyan text-white" id="message" rows="6" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-neon w-100 mt-4 py-3 fs-5">
+                            ENVIAR AL NEXO <i class="fas fa-satellite-dish ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <p class="mb-3 text-muted">O envíame un ping directo:</p>
+                <a href="mailto:crismery13.07.2004@gmail.com" class="mx-3 text-neon-cyan fs-4"><i class="fas fa-envelope"></i> crismery13.07.2004@gmail.com</a>
+                <a href="https://wa.me/18291234567" target="_blank" class="mx-3 text-neon-pink fs-4"><i class="fab fa-whatsapp"></i> +1 (829) 123-4567</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer py-5 text-center">
+        <div class="container">
+            <p class="mb-2">
+                © 2026 CRISMERY FLORENTINO ENCARNACIÓN • HECHO EN SANTO DOMINGO CON 
+                <span class="neon-text">NEÓN Y CÓDIGO</span>
+            </p>
+            <p class="text-muted small">
+                Single-file portfolio • Bootstrap 5 • Totalmente responsive • Modo nocturno 24/7
+            </p>
+            <div class="mt-4">
+                <a href="https://github.com/crismery20040713-debug" target="_blank" class="text-white mx-3"><i class="fab fa-github fa-2x"></i></a>
+                <a href="#" class="text-white mx-3"><i class="fab fa-vercel fa-2x"></i></a>
+                <a href="#" class="text-white mx-3"><i class="fas fa-globe fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS + Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script>
+        // Formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            
+            // Efecto cyberpunk al enviar
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.style.transition = 'all 0.4s';
+            btn.innerHTML = `<i class="fas fa-hack fa-spin"></i> TRANSMITIENDO...`;
+            
+            setTimeout(() => {
+                alert(`✅ ¡Mensaje recibido en el grid, ${name}!\n\nGracias por conectar. Te responderé en menos de 24 horas.`);
+                btn.innerHTML = originalText;
+                this.reset();
+            }, 1600);
+        });
+
+        // Animación de barras de skills al hacer scroll
+        function animateSkills() {
+            const progressBars = document.querySelectorAll('.skill-progress');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.width = entry.target.style.width || '0%';
+                    }
+                });
+            }, { threshold: 0.7 });
+            
+            progressBars.forEach(bar => observer.observe(bar.parentElement));
+        }
+
+        // Efecto de partículas sutiles en hero (ligero)
+        function createParticles() {
+            const hero = document.querySelector('.hero');
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = '3px';
+                particle.style.height = '3px';
+                particle.style.background = Math.random() > 0.5 ? '#00f7ff' : '#ff00aa';
+                particle.style.borderRadius = '50%';
+                particle.style.opacity = Math.random();
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.boxShadow = `0 0 8px currentColor`;
+                particle.style.animation = `floatParticle ${Math.random() * 15 + 10}s linear infinite`;
+                hero.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 20000);
+            }
+        }
+
+        // Estilos para partículas
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes floatParticle {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(-1500px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Inicializar todo
+        window.onload = function() {
+            animateSkills();
+            createParticles();
+            
+            console.log('%c🚀 PORTAFOLIO CYBERPUNK DE CRISMERY CARGADO CON ÉXITO', 'color:#00f7ff; font-family:monospace; font-size:18px; text-shadow:0 0 10px #00f7ff;');
+            console.log('✅ Responsive en PC y móvil | ✅ Modo nocturno activado | ✅ Un solo archivo');
+        };
+    </script>
+</body>
+</html>
